@@ -3,7 +3,8 @@ layout: ~/layouts/MainLayout.astro
 title: Server-side Rendering
 i18nReady: true
 setup: |
-  import PackageManagerTabs from '~/components/tabs/PackageManagerTabs.astro'
+  import PackageManagerTabs from '~/components/tabs/PackageManagerTabs.astro';
+  import Since from '~/components/Since.astro';
 ---
 
 **Server-side Rendering**, aka SSR, can be enabled in Astro. When you enable SSR you can:
@@ -98,7 +99,27 @@ You can also add an adapter manually by installing the package and updating `ast
 
 ## Features
 
-Astro will remain a static-site generator by default. But once you enable a server-side rendering adapter, **every route in your pages directory becomes a server-rendered route** and a few new features become available to you.
+Astro will remain a static-site generator by default. But once you enable a server-side rendering adapter, **every route in your pages directory defaults to a server-rendered route** and a few new features become available to you.
+
+### Prerendering (Experimental)
+
+<Since v="1.7.0" />
+
+:::caution
+This API is still experimental and requires passing the `--experimental-prerender` flag or setting `{ experimental: { prerender: true } }` in your `astro.config.mjs` file.
+:::
+
+Any file in the `pages/` directory can opt-in to prendering, or standard static build-time behavior, by including the following line.
+
+```astro title="src/pages/index.astro" {2}
+---
+export const prerender = true;
+// ...
+---
+<html>
+  <!-- Page here... -->
+</html>
+```
 
 ### `Astro.request.headers`
 
